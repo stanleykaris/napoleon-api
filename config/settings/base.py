@@ -24,11 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-q9my7am$yvak#jo6)gh&o%gx-0*p2u6!-lfy-72h+=)-(jxq8t')
+# Parse DEBUG from environment with safe defaults
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't', 'yes', 'y')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY and DEBUG:
+    import warnings
+    warnings.warn('SECRET_KEY not set. Using a development default. Set SECRET_KEY in .env for production.')
+    SECRET_KEY = 'django-insecure-development-key-only'  # Development fallback
+elif not SECRET_KEY:
+    raise ValueError('SECRET_KEY environment variable is not set')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 CORS_ALLOW_ALL_ORIGINS = True
