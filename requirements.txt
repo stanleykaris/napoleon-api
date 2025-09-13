@@ -1,0 +1,8 @@
+# Base requirements for the project
+-r requirements/base.txt
+
+# For development, install with:
+# pip install -r requirements/development.txt
+
+# For production, install with:
+# pip install -r requirements/production.txt
