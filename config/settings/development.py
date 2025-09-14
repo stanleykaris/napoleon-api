@@ -1,4 +1,5 @@
-from .base import *
+from datetime import timedelta
+from .base import MIDDLEWARE, INSTALLED_APPS, REST_FRAMEWORK, BASE_DIR
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
